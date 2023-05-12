@@ -4,7 +4,7 @@
 @Author  :   Karri Korsu 
 @Version :   1.0
 @Contact :   karri.korsu@edu.turkuamk.fi
-@Desc    :   None
+@Desc    :   Where the program is run.
 '''
 
 import tkinter as tk
