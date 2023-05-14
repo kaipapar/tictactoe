@@ -27,30 +27,34 @@ class Logic:
     Actual selection function which changes or doesn't change the value of matrix.
     Listens to UI.
     '''
-    def selection(self, input, x, y):
+    def selection(self, x, y, input=1,):
         if self.ec_selection(x,y):
             self.matrix[x][y] = input
     
     '''
     Checks all possible outcomes where a user wins.
     '''
-    def check_win(self, matrix, me):
+    def check_win(self, matrix, me=1):
         # rows
         for item in matrix:
             if item == [me,me,me]:
                 self.win = True
+                print('42')
         # columns    
         for i in range(len(matrix)):
             if matrix[i][0] != me:
                 break
             elif i == len(matrix):
                 self.win == True
+                print('49')
         # nw - se
         if matrix[0][0] == me and matrix[1][1] == me and matrix[2][2] == me:
             self.win = True
+            print('53')
         # ne - sw
         if matrix[2][0] == me and matrix[1][1] == me and matrix[0][2] == me:
             self.win = True
+            print('57')
 
         return self.win
 
