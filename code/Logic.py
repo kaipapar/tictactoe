@@ -11,7 +11,7 @@ class Logic:
     og_matrix = [[0,0,0],[0,0,0],[0,0,0]]
     def __init__(self):
         self.win = False
-        self.matrix = [[0,1,2],[3,4,5],[6,7,8]]#[[0,0,0],[0,0,0],[0,0,0]]
+        self.matrix = Logic.og_matrix #[[0,0,0],[0,0,0],[0,0,0]]#[[0,1,2],[3,4,5],[6,7,8]]
 
     '''
     error checked for empty value in matrix
