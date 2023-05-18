@@ -12,6 +12,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 import Logic
+import os
 
 '''
 Handles rendering game logic, 
@@ -36,33 +37,41 @@ class UI(ttk.Frame):
 
         # Buttons for selecting a place where you mark your.
         # Done like this to avoid stupid garbage collection
-        self.button1 = ttk.Button(self, text=f'{self.game.matrix[0][0]}', 
-                           command=lambda e=1: self.click_button(btn=self.button1,input=e,x=0,y=0),
-                           width=5).place(y=100,x=100)
-        self.buton2 = ttk.Button(self, text=f'{self.game.matrix[0][1]}', 
-                           command=lambda e=1: self.click_button(btn=self.button2,input=e,x=0,y=1),
-                           width=5).place(y=100,x=150)
-        self.button3 = ttk.Button(self, text=f'{self.game.matrix[0][2]}', 
-                           command=lambda e=1: self.click_button(btn=self.button3, input=e,x=0,y=2),
-                           width=5).place(y=100,x=200)
-        self.button4 = ttk.Button(self, text=f'{self.game.matrix[1][0]}', 
-                           command=lambda e=1: self.click_button(btn=self.button4,input=e,x=1,y=0),
-                           width=5).place(y=130,x=100)
-        self.button5 = ttk.Button(self, text=f'{self.game.matrix[1][1]}', 
-                           command=lambda e=1: self.click_button(btn=self.button5,input=e,x=1,y=1),
-                           width=5).place(y=130,x=150)
-        self.button6 = ttk.Button(self, text=f'{self.game.matrix[1][2]}', 
-                           command=lambda e=1: self.click_button(btn=self.button6,input=e,x=1,y=2),
-                           width=5).place(y=130,x=200)
-        self.button7 = ttk.Button(self, text=f'{self.game.matrix[2][0]}', 
-                           command=lambda e=1: self.click_button(btn=self.button7,input=e,x=2,y=0),
-                           width=5).place(y=160,x=100)
-        self.button8 = ttk.Button(self, text=f'{self.game.matrix[2][1]}', 
-                           command=lambda e=1: self.click_button(btn=self.button8,input=e,x=2,y=1),
-                           width=5).place(y=160,x=150)
-        self.button9 = ttk.Button(self, text=f'{self.game.matrix[2][2]}', 
-                           command=lambda e=1: self.click_button(btn=self.button9,input=e,x=2,y=2),
-                           width=5).place(y=160,x=200)
+        self.button1 = ttk.Button(self, text=f'{self.game.matrix[0][0]}', width=5)
+        self.button1.config(command=lambda e=1: self.click_button(btn=self.button1,x=0,y=0),)
+        self.button1.place(y=100,x=100)
+
+        self.button2 = ttk.Button(self, text=f'{self.game.matrix[0][1]}', width=5)
+        self.button2.config(command=lambda e=1: self.click_button(btn=self.button2,x=0,y=1),)
+        self.button2.place(y=100,x=150)
+
+        self.button3 = ttk.Button(self, text=f'{self.game.matrix[0][2]}', width=5)
+        self.button3.config(command=lambda e=1: self.click_button(btn=self.button3,x=0,y=2),)
+        self.button3.place(y=100,x=200)
+
+        self.button4 = ttk.Button(self, text=f'{self.game.matrix[1][0]}', width=5)
+        self.button4.config(command=lambda e=1: self.click_button(btn=self.button4,x=1,y=0),)
+        self.button4.place(y=130,x=100)
+
+        self.button5 = ttk.Button(self, text=f'{self.game.matrix[1][1]}', width=5)
+        self.button5.config(command=lambda e=1: self.click_button(btn=self.button5,x=1,y=1),)
+        self.button5.place(y=130,x=150)
+
+        self.button6 = ttk.Button(self, text=f'{self.game.matrix[1][2]}', width=5)
+        self.button6.config(command=lambda e=1: self.click_button(btn=self.button6,x=1,y=2),)
+        self.button6.place(y=130,x=200)
+
+        self.button7 = ttk.Button(self, text=f'{self.game.matrix[2][0]}', width=5)                
+        self.button7.config(command=lambda e=1: self.click_button(btn=self.button7,x=2,y=0),)
+        self.button7.place(y=160,x=100)
+
+        self.button8 = ttk.Button(self, text=f'{self.game.matrix[2][1]}', width=5)                          
+        self.button8.config(command=lambda e=1: self.click_button(btn=self.button8,x=2,y=1),)
+        self.button8.place(y=160,x=150)
+        
+        self.button9 = ttk.Button(self, text=f'{self.game.matrix[2][2]}', width=5)
+        self.button9.config(command=lambda button=self.button9, e=1: self.click_button(btn=button, x=2, y=2),)
+        self.button9.place(y=160, x=200)
         
         
     
@@ -94,8 +103,8 @@ class UI(ttk.Frame):
     '''
     Gives necessary info to other functions when button is pressed
     '''
-    def click_button(self, btn,x:int, y:int, input=1):
-        self.game.selection(input,x,y)
+    def click_button(self, btn:tk.Button,x:int, y:int, input=1):
+        self.game.selection(x,y)
         #self.update_button(x,y)
         btn.config(text= f'{input}')
         if self.game.check_win(self.game.matrix):
@@ -121,6 +130,6 @@ class UI(ttk.Frame):
     '''
     def you_won(self):
         if messagebox.askretrycancel('You won!', 'Would you like to play again?'):
-            self.game.restart()
+            os.system('python3 code/Main.py')
         else:
             self.__close()
