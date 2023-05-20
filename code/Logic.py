@@ -6,12 +6,13 @@
 @Contact :   karri.korsu@edu.turkuamk.fi
 @Desc    :   Logic class to store the game logic. 
 '''
+from copy import deepcopy
 
 class Logic:
     og_matrix = [[0,0,0],[0,0,0],[0,0,0]]
     def __init__(self):
         self.win = False
-        self.matrix = Logic.og_matrix #[[0,0,0],[0,0,0],[0,0,0]]#[[0,1,2],[3,4,5],[6,7,8]]
+        self.matrix = deepcopy(Logic.og_matrix) #[[0,0,0],[0,0,0],[0,0,0]]#[[0,1,2],[3,4,5],[6,7,8]]
 
     '''
     error checked for empty value in matrix
@@ -61,6 +62,8 @@ class Logic:
     Restart function which sets the matrix to original standing and sets self.win=False
     '''            
     def restart(self):
-        self.matrix = Logic.og_matrix
+        self.matrix = deepcopy(Logic.og_matrix)
         self.win = False
+        print(Logic.og_matrix)
+        print(self.matrix)
                     

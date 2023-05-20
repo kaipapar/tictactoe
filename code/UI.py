@@ -13,12 +13,20 @@ from tkinter import ttk
 from tkinter import messagebox
 import Logic
 import os
+'''
+Handles the creation of button widgets
 
+class CustomButtonWidget(ttk.Button):
+    def __init__(self, parent, command, x, y, coordx, coordy):
+        super().__init__(self, parent, x=coordx, y=coordy, command=command)
+        self.command = '''
 '''
 Handles rendering game logic, 
 Data flow: Logic <-> UI -> Main
 '''
 class UI(ttk.Frame):
+    #class Tictactoe():
+
     def __init__(self, parent):
         # Initializing tkinter
         super().__init__(master=parent)
@@ -31,10 +39,11 @@ class UI(ttk.Frame):
 
         # Close button
         ttk.Button(self,
-                   text='Close',
-                   command=lambda e=None: self.__close(),
-                   ).place(x=400,y=400)
-
+                text='Close',
+                command=lambda e=None: self.__close(),
+                ).place(x=400,y=400)
+        self.og_button_dict
+        '''
         # Buttons for selecting a place where you mark your.
         # Done like this to avoid stupid garbage collection
         self.button1 = ttk.Button(self, text=f'{self.game.matrix[0][0]}', width=5)
@@ -72,33 +81,36 @@ class UI(ttk.Frame):
         self.button9 = ttk.Button(self, text=f'{self.game.matrix[2][2]}', width=5)
         self.button9.config(command=lambda button=self.button9, e=1: self.click_button(btn=button, x=2, y=2),)
         self.button9.place(y=160, x=200)
+        '''
         
         
     
     '''
     Functions for creating buttons
     '''
-    
     @property
     def og_button_dict(self):
         print('49')
         self.button_dict = self.create_buttons()
         return self.button_dict
-    ''' 
+    
+    #### FIXME: buttondict is local so it doesnt work properly.. garbage collection
     def create_buttons(self):
         coord_y=100
         buttondict = {}
         for i in range(len(self.game.matrix)):
             coord_x=100
             for j in range(len(self.game.matrix[0])):
-                buttondict[f'[{i},{j}]'] = ttk.Button(self, text=f'{self.game.matrix[i][j]}', 
-                           command=lambda e=1: self.click_button(input=e,x=i,y=j),
-                           width=5).place(y=coord_y,x=coord_x)
+                buttondict[f'[{i},{j}]'] = ttk.Button(self, text=f'{self.game.matrix[i][j]}', width=5)
+                buttondict[f'[{i},{j}]'].config(command=lambda e=1: self.click_button(btn=buttondict[f'[{i},{j}]'],x=i,y=j))
+                buttondict[f'[{i},{j}]'].place(y=coord_y,x=coord_x)
                 print(f'[{i},{j}]')
+                print(buttondict.keys())
+                print(buttondict.values())
                 coord_x+=50
             coord_y+=30
         return buttondict
-    '''
+    
     
     '''
     Gives necessary info to other functions when button is pressed
@@ -110,13 +122,7 @@ class UI(ttk.Frame):
         if self.game.check_win(self.game.matrix):
             self.you_won()
 
-    '''
-    updates the text of a button to correct value and makes it so that the button no longer does anything
-    '''
-    '''
-    def update_button(self, x, y):
-        print(self.button_dict[f'[{x},{y}]'])#.config(text=f'{self.game.matrix[x][y]}', command=None)
-    '''    
+
     '''
     Function for terminating the program. Double underscore for fancy obfuscation reasons.
     '''
@@ -130,6 +136,8 @@ class UI(ttk.Frame):
     '''
     def you_won(self):
         if messagebox.askretrycancel('You won!', 'Would you like to play again?'):
-            os.system('python3 code/Main.py')
+            #os.system('python3 code/Main.py')
+            self.game.restart()
         else:
+            #self.parent.destroy()
             self.__close()
